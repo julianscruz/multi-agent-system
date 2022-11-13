@@ -16,15 +16,32 @@ public class Plant_Trees : MonoBehaviour
     {
         for (int i = 0; i < population; i++)
         {
-            //GameObject newSeed = Instantiate(seed, new Vector3(x, 0.15f, z), Quaternion.identity);
-            Instantiate(seed, new Vector3(Random.Range(-range, range) + x, 0f, Random.Range(-range, range) + z), Quaternion.identity);            
-        }
-        
+            plantSeed();
+        }        
     }
 
-    // Update is called once per frame
+    void plantSeed()
+    {
+        //GameObject newSeed = Instantiate(seed, new Vector3(x, 0.15f, z), Quaternion.identity);
+        var newTree = Instantiate(seed, new Vector3(Random.Range(-range, range) + x, 0f, Random.Range(-range, range) + z), Quaternion.identity);            
+        newTree.gameObject.tag = "tree";
+        newTree.transform.parent = gameObject.transform;;
+    }
+
+    private GameObject[] numberOfTrees;
+
+    int counting()
+    {
+        numberOfTrees = GameObject.FindGameObjectsWithTag("tree");
+
+        return numberOfTrees.Length;
+    }
+
     void Update()
     {
-        
+        if ( counting() < (population / 2) )
+        {
+            plantSeed();
+        }
     }
 }

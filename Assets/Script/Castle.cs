@@ -23,10 +23,9 @@ public class Castle : MonoBehaviour
         wood = 100;
 
         state = "Crear Leñador";
-            GameObject newLumberjack = Instantiate(Lumberjack, transform.position, transform.rotation);
-            newLumberjack.GetComponent<Lumberjack>().Team = Team;
-
-            wood -= 80;
+        GameObject newLumberjack = Instantiate(Lumberjack, transform.position, transform.rotation);
+        newLumberjack.GetComponent<Lumberjack>().Team = Team;
+        wood -= 80;
     }
 
     void Update()
