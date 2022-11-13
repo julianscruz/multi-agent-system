@@ -16,6 +16,8 @@ public class Castle : MonoBehaviour
     private int numberOfSoldier;
     private int numberOfLumberjack;
 
+    private int teamKills = 0;
+
     private int alerts = 0;
 
     void Start()
@@ -25,6 +27,7 @@ public class Castle : MonoBehaviour
         state = "Crear Leñador";
         GameObject newLumberjack = Instantiate(Lumberjack, transform.position, transform.rotation);
         newLumberjack.GetComponent<Lumberjack>().Team = Team;
+        //newLumberjack.transform.parent = gameObject.transform;
         wood -= 80;
     }
 
@@ -34,6 +37,11 @@ public class Castle : MonoBehaviour
         rules();
     }
 
+    public void addKill()
+    {
+        teamKills++;
+    }
+
     void rules()
     {
         if ( numberOfSoldier > 1 && wood >= 120 )
@@ -41,6 +49,7 @@ public class Castle : MonoBehaviour
             state = "Crear Solado";
             GameObject newSoldier = Instantiate(Soldier, transform.position, transform.rotation);
             newSoldier.GetComponent<Soldier>().Team = Team;
+            //newSoldier.transform.parent = gameObject.transform;
 
             wood -= 120;
         }
@@ -50,6 +59,7 @@ public class Castle : MonoBehaviour
             state = "Crear Leñador";
             GameObject newLumberjack = Instantiate(Lumberjack, transform.position, transform.rotation);
             newLumberjack.GetComponent<Lumberjack>().Team = Team;
+            //newLumberjack.transform.parent = gameObject.transform;
 
             wood -= 80;
         }        
@@ -58,6 +68,7 @@ public class Castle : MonoBehaviour
             state = "Crear Leñador";
             GameObject newLumberjack = Instantiate(Lumberjack, transform.position, transform.rotation);
             newLumberjack.GetComponent<Lumberjack>().Team = Team;
+            //newLumberjack.transform.parent = gameObject.transform;
 
             wood -= 80;
         }
@@ -67,6 +78,7 @@ public class Castle : MonoBehaviour
             state = "Crear Solado";
             GameObject newSoldier = Instantiate(Soldier, transform.position, transform.rotation);
             newSoldier.GetComponent<Soldier>().Team = Team;
+            //newSoldier.transform.parent = gameObject.transform;
 
             wood -= 120;
         }
@@ -121,7 +133,7 @@ public class Castle : MonoBehaviour
     public string[] post()
     {
         //var teamCount =  TeamMembers.Length;
-        string[] stateTeam = new string[] { numberOfLumberjack.ToString(), numberOfSoldier.ToString(), Mathf.RoundToInt(wood).ToString(), state, alerts.ToString() };
+        string[] stateTeam = new string[] { numberOfLumberjack.ToString(), numberOfSoldier.ToString(), Mathf.RoundToInt(wood).ToString(), state, alerts.ToString(), teamKills.ToString() };
         return stateTeam;
     }
 }

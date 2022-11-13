@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class Lumberjack : MonoBehaviour
 {
-    public static float live = 100;
+    public float live = 100;
     public string state = "cortar";
 
     public string Team;
@@ -237,10 +237,12 @@ public class Lumberjack : MonoBehaviour
     public void damage( float damage )
     {
         live -= damage;
+        Debug.Log(Team + " - Me han herido: " + damage);
 
         if ( live <= 0 )
         {
             state = "Die";
+            Base.GetComponent<Castle>().addKill();
             Destroy(gameObject, 5);
         }
     }

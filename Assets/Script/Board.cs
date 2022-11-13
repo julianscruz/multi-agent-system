@@ -31,6 +31,10 @@ public class Board : MonoBehaviour
     private GameObject redLeader;
     private GameObject blueLeader;
 
+    
+    public Text RedKills;
+    public Text BlueKills;
+
     private string[] redTeam;
     private string[] blueTeam;
     
@@ -64,6 +68,9 @@ public class Board : MonoBehaviour
         BlueState.text   = blueTeam[3] + "\r\n";
 
         BlueAlert.text = "Alert - " + blueTeam[4] ;
+
+        RedKills.text = "Kills - " + redTeam[4] ;
+        BlueKills.text = blueTeam[5] + " - Kills";
     }
 
     void get() {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Soldier : MonoBehaviour
 {
-    public static float live = 100;
+    public float live = 100;
     public string state = "Patrol";
 
     public string Team;
@@ -41,13 +41,30 @@ public class Soldier : MonoBehaviour
             case "Search":
                 search();
                 break;
-        }        
+        }
+
+        
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        Debug.Log("OnTriggerStay"+other.gameObject.tag);
+
+        if (other.gameObject.tag == Enemy)
+        {
+            //other.attachedRigidbody.AddForce(Vector3.up * 10);
+            Debug.Log("Enemigo"); 
+
+            cut(other.gameObject);
+        }            
     }
 
     void walk( Vector3 destination )
     {
         SoldierAgent.isStopped = false;
-        SoldierAgent.SetDestination(destination); // ir al punto de destino;        
+        SoldierAgent.SetDestination(destination); // ir al punto de destino;
+
+        //search();    
 
         if (!SoldierAgent.pathPending)
         {
@@ -85,8 +102,9 @@ public class Soldier : MonoBehaviour
             if (look.collider.gameObject.tag == Enemy)
             {
                 anyone(look.collider.gameObject.transform.position);
+                //cut(look.collider.gameObject);
+                //attack(look.collider.gameObject);
 
-                cut(look.collider.gameObject);
             }else {
                 goTo = look.collider.gameObject.transform.position;
             }
@@ -99,21 +117,28 @@ public class Soldier : MonoBehaviour
 
     public void attack( Vector3 enemy )
     {
+        //state = "Attack";
         Debug.Log(Team + " - Ir a enemigo: " + enemy); 
         goTo = enemy;
-        walk(goTo);        
+        walk(goTo);  
+        state = "Patrol";      
     }
 
     void cut( GameObject enemy )
     {
-        var force = 50f;
+        var force = 30f;
 
-        //if ( enemy.GetComponent<Lumberjack>().getLive() > 0 )
-        //{
-            enemy.GetComponent<Lumberjack>().damage(force);
-            enemy.GetComponent<Soldier>().damage(force);
-            
-        //}
+        Debug.Log("cut: " + enemy.name); 
+
+        if ( enemy.name == "Lumberjack(Clone)" )
+        {
+            enemy.GetComponent<Lumberjack>().damage(force);    
+        }
+
+        if ( enemy.name == "Soldier(Clone)" )
+        {
+            enemy.GetComponent<Soldier>().damage(force);            
+        }
     }
 
     public void damage( float damage )
@@ -124,6 +149,7 @@ public class Soldier : MonoBehaviour
         if ( live <= 0 )
         {
             state = "Die";
+            Base.GetComponent<Castle>().addKill();
             Destroy(gameObject, 5);
         }
     }
