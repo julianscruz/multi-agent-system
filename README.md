@@ -4,6 +4,10 @@
 
 Multi-agent system with a state machine to make decisions, based on the game Age of Empires
 
+![screenshot](Assets/Media/screen1.png)
+
+![screenshot](Assets/Media/screen2.png)
+
 ## Authors
 
 Cesar Julian Solano Cruz
